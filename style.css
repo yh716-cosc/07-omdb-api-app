@@ -119,6 +119,7 @@ h2 {
 
 .movie-info {
   padding: 16px;
+  padding-top: 12px;
 }
 
 .movie-title {
@@ -128,14 +129,18 @@ h2 {
   text-overflow: ellipsis;
 }
 
-.movie-year {
+.movie-year, .movie-genre {
   color: #ccc;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .movie-actions {
   display: flex;
   justify-content: space-between;
-  margin-top: 8px;
+  margin-top: 12px;
 }
 
 .btn {
@@ -145,7 +150,6 @@ h2 {
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 13px;
   transition: background-color 0.3s;
 }
 
@@ -160,8 +164,6 @@ h2 {
 .btn-remove:hover {
   background-color: #345f98;
 }
-
-/* Pagination styles removed */
 
 .no-results {
   text-align: center;
