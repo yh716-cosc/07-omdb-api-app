@@ -135,18 +135,12 @@ h2 {
   text-overflow: ellipsis;
 }
 
-.movie-year, .movie-genre {
+.movie-year {
   color: #ccc;
-  margin-bottom: 4px;
+  margin-bottom: 16px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.movie-actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 12px;
 }
 
 .btn {
