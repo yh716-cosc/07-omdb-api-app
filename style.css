@@ -35,11 +35,17 @@ header p {
 
 .search-container {
   display: flex;
+  justify-content: center;
   max-width: 600px;
   width: 90%;
   margin: -25px auto 0;
   position: relative;
   z-index: 10;
+}
+
+#search-form {
+  display: flex;
+  width: 100%;
 }
 
 main {
