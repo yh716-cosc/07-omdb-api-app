@@ -7,7 +7,7 @@ const watchlistContainer = document.getElementById('watchlist');
 
 // Function to fetch movies from the OMDb API
 const fetchMovies = async (query) => {
-  const apiKey = 'd21e119d'; // Replace with your OMDb API key
+  const apiKey = 'your-api-key'; // IMPORTANT: Replace with your OMDb API key
   const url = `https://www.omdbapi.com/?s=${query}&apikey=${apiKey}`;
 
   // Fetch data from the API
