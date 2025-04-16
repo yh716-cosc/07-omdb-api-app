@@ -11,3 +11,6 @@ Modify the JavaScript so that clicking an 'Add to Watchlist' button adds the mov
 I want all the movies in my watchlist to stay there even after refreshing the page.
 
 If the watchlist is empty, display the text "Your watchlist is empty. Search for movies to add!".
+
+## Prompt 4
+Provide a way to delete movies from the watch list.
