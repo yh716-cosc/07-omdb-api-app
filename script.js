@@ -37,22 +37,26 @@ function displayMovies(movies) {
     // Create a div for the movie card
     const card = document.createElement('div');
     card.className = 'movie-card';
+    // Center align everything in the card
+    card.style.display = 'flex';
+    card.style.flexDirection = 'column';
+    card.style.alignItems = 'center';
+    card.style.justifyContent = 'center';
 
     // Set the inner HTML of the card using template literals
-    // The poster image is restricted to 150px width and 225px height
     card.innerHTML = `
       <img 
         src="${movie.Poster !== 'N/A' ? movie.Poster : 'placeholder.jpg'}" 
         alt="Poster for ${movie.Title}"
-        style="width: 150px; height: 225px; object-fit: cover;"
+        style="width: 150px; height: 225px; object-fit: cover; margin-bottom: 10px;"
       >
-      <h3>${movie.Title}</h3>
-      <p>${movie.Year}</p>
-      <button class="add-watchlist-btn">Add to Watchlist</button>
+      <h3 style="text-align: center;">${movie.Title}</h3>
+      <p style="text-align: center;">${movie.Year}</p>
+      <button id="add-watchlist-btn" class="btn">Add to Watchlist</button>
     `;
 
     // Add event listener for the "Add to Watchlist" button
-    const addBtn = card.querySelector('.add-watchlist-btn');
+    const addBtn = card.querySelector('#add-watchlist-btn');
     addBtn.addEventListener('click', function() {
       addToWatchlist(movie);
     });
