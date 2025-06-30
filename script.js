@@ -1,7 +1,11 @@
 // Get references to the search form and the results grid in the HTML
 const searchForm = document.getElementById('search-form');
-const searchInput = document.getElementById('movie-search'); // <-- updated
-const resultsGrid = document.getElementById('movie-results'); // <-- updated
+const searchInput = document.getElementById('movie-search');
+const resultsGrid = document.getElementById('movie-results');
+const watchlistContainer = document.getElementById('watchlist');
+
+// Use an array to store watchlist movies
+let watchlist = [];
 
 // This function fetches movies from the OMDb API using the search term
 async function fetchMovies(searchTerm) {
@@ -12,7 +16,7 @@ async function fetchMovies(searchTerm) {
   // Fetch data from the OMDb API
   const response = await fetch(url);
   const data = await response.json();
-
+  console.log(url);
   // Return the array of movies, or an empty array if none found
   return data.Search || [];
 }
@@ -22,6 +26,12 @@ function displayMovies(movies) {
   // Clear any previous results
   resultsGrid.innerHTML = '';
 
+  // If no movies are found, show a message
+  if (movies.length === 0) {
+    resultsGrid.innerHTML = '<p>No movies found. Try another search!</p>';
+    return;
+  }
+
   // Loop through each movie and create a card for it
   movies.forEach(movie => {
     // Create a div for the movie card
@@ -29,14 +39,69 @@ function displayMovies(movies) {
     card.className = 'movie-card';
 
     // Set the inner HTML of the card using template literals
+    // The poster image is restricted to 150px width and 225px height
     card.innerHTML = `
-      <img src="${movie.Poster !== 'N/A' ? movie.Poster : 'placeholder.jpg'}" alt="Poster for ${movie.Title}">
+      <img 
+        src="${movie.Poster !== 'N/A' ? movie.Poster : 'placeholder.jpg'}" 
+        alt="Poster for ${movie.Title}"
+        style="width: 150px; height: 225px; object-fit: cover;"
+      >
+      <h3>${movie.Title}</h3>
+      <p>${movie.Year}</p>
+      <button class="add-watchlist-btn">Add to Watchlist</button>
+    `;
+
+    // Add event listener for the "Add to Watchlist" button
+    const addBtn = card.querySelector('.add-watchlist-btn');
+    addBtn.addEventListener('click', function() {
+      addToWatchlist(movie);
+    });
+
+    // Add the card to the results grid
+    resultsGrid.appendChild(card);
+  });
+}
+
+// This function adds a movie to the watchlist if it's not already there
+function addToWatchlist(movie) {
+  // Check if the movie is already in the watchlist by imdbID
+  const exists = watchlist.some(item => item.imdbID === movie.imdbID);
+
+  // Only add if not already in the watchlist
+  if (!exists) {
+    watchlist.push(movie);
+    displayWatchlist();
+  }
+}
+
+// This function displays the watchlist
+function displayWatchlist() {
+  // Clear the watchlist container
+  watchlistContainer.innerHTML = '';
+
+  // If the watchlist is empty, show a message
+  if (watchlist.length === 0) {
+    watchlistContainer.textContent = 'Your watchlist is empty. Search for movies to add!';
+    return;
+  }
+
+  // Loop through each movie in the watchlist and create a card
+  watchlist.forEach(movie => {
+    const card = document.createElement('div');
+    card.className = 'movie-card';
+
+    // Restrict poster size in the watchlist as well
+    card.innerHTML = `
+      <img 
+        src="${movie.Poster !== 'N/A' ? movie.Poster : 'placeholder.jpg'}" 
+        alt="Poster for ${movie.Title}"
+        style="width: 150px; height: 225px; object-fit: cover;"
+      >
       <h3>${movie.Title}</h3>
       <p>${movie.Year}</p>
     `;
 
-    // Add the card to the results grid
-    resultsGrid.appendChild(card);
+    watchlistContainer.appendChild(card);
   });
 }
 
@@ -56,3 +121,6 @@ searchForm.addEventListener('submit', async function(event) {
     displayMovies(movies);
   }
 });
+
+// Show the watchlist on page load
+displayWatchlist();
